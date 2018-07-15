@@ -3,6 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{38FC23F0-7C66-45FE-890B-ADA749A13767}"
+	ProjectSection(SolutionItems) = preProject
+		queriable.js = queriable.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6CE178C8-1DF4-4AFF-8C39-150CA4FDB576}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "demo", "demo", "{9099FDB2-AF5E-4E73-B968-3FDFA7420F2A}"
+	ProjectSection(SolutionItems) = preProject
+		queriable-arrays-demo.html = queriable-arrays-demo.html
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
