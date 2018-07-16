@@ -31,6 +31,12 @@
         Array.prototype.GroupBy = function (expression) {
             return GroupByFunc(this, expression);
         }
+        Array.prototype.Skip = function (amount) {
+            return SkipFunc(this, amount);
+        }
+        Array.prototype.Take = function (amount) {
+            return TakeFunc(this, amount);
+        }
     }
 }
 
@@ -119,13 +125,54 @@
         }
         return groups;
     }
+
+    function SkipFunc(source, amount) {
+        return source.slice(amount); 
+    }
+
+    function TakeFunc(source, amount) {
+        return source.slice(0, amount);
+    }
 }
+
+var Records = [
+    {
+        Id: 1,
+        Name: 'Obj1'
+    },
+    {
+        Id: 2,
+        Name: 'Obj2'
+    },
+    {
+        Id: 3,
+        Name: 'Obj3'
+    }
+];
+
+var Notes = [
+    {
+        Id: 1,
+        Note: 'note 1',
+        RecordId: 1
+    },
+    {
+        Id: 2,
+        Note: 'note 2',
+        RecordId: 2
+    },
+    {
+        Id: 3,
+        Note: 'note 3',
+        RecordId: 1
+    }
+];
 
 // entities
 {
     function Joined(groups) {
         let self = this;
-
+        console.log(groups);
         for (let i = 0; i < groups.length; i++) {
             eval('self.' + groups[i].Key + ' = groups[i].Values');
         }
