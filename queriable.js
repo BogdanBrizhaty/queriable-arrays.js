@@ -28,14 +28,20 @@
         Array.prototype.ForEach = function (callback) {
             ForEachFunc(this, callback);
         }
-        Array.prototype.GroupBy = function (expression) {
-            return GroupByFunc(this, expression);
-        }
+        //Array.prototype.GroupBy = function (expression) {
+        //    return GroupByFunc(this, expression);
+        //}
         Array.prototype.Skip = function (amount) {
             return SkipFunc(this, amount);
         }
         Array.prototype.Take = function (amount) {
             return TakeFunc(this, amount);
+        }
+        Array.prototype.All = function (predicate) {
+            return AllFunc(this, predicate);
+        }
+        Array.prototype.Select = function (selectorFunc) {
+            SelectFunc(this, selectorFunc);
         }
     }
 }
@@ -97,41 +103,27 @@
         }
     }
 
-    function GroupByFunc(source, fieldExpression) {
-        var exprBody = fieldExpression.toString();
-        // todo: modify expression checker
-        if (!/.+=>.+\..+/.test(exprBody)) {
-            throw new Error('Invalid expression!');
-        }
-        var lastExprMember = exprBody.match(/\..+/)[0].substr(1);
-        return groupByFieldName(source, lastExprMember);
-    }
-    function groupByFieldName(source, fName) {
-        var groups = [];
-        for (let i = 0; i < source.length; i++) {
-            var current = eval('source[i].' + fName);
-            if (current) {
-                // if there is no groupping key for now and new one found
-                // add to the groupping array
-                let groupping = FirstOrDefaultFunc(groups, g => g.Key === current);
-                if (groupping === null) {
-                    groups.push(new Group(current, source[i]));
-                }
-                // else if it is already
-                else {
-                    groupping.Values.push(source[i]);
-                }
-            }
-        }
-        return groups;
-    }
-
     function SkipFunc(source, amount) {
         return source.slice(amount); 
     }
 
     function TakeFunc(source, amount) {
         return source.slice(0, amount);
+    }
+
+    function AllFunc(source, predicate) {
+        let valid = true;
+        ForEachFunc(source, function (e) {
+            valid = predicate(e);
+        });
+        return valid;
+    }
+    function SelectFunc(source, selector) {
+        let selected = [];
+        ForEachFunc(source, function (element) {
+            selected.push(selector(element));
+        });
+        return selected;
     }
 }
 
